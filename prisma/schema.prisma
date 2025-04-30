@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Newsletter {
+  email String @id
+
+  @@map("newsletters")
+}
+
+model SubscribedUser {
+  email     String   @id
+  name      String
+  cellphone String
+  birthdate DateTime
+  entity    String
+  Events    Event[]
+
+  @@map("subscribed_users")
+}
+
+model Event {
+  id               String   @id @default(uuid())
+  title            String
+  imageUrl         String
+  tag              String
+  description      String   @db.Text
+  created_at       DateTime @default(now())
+  event_date       DateTime
+  address          String
+  max_participants Int?
+
+  user_email             SubscribedUser @relation(fields: [subscribed_users_email], references: [email])
+  subscribed_users_email String
+
+  @@map("events")
+}
