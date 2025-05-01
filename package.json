@@ -9,7 +9,7 @@
 		"start": "node build/server.js",
 		"lint": "biome format --write ./src",
 		"test": "vitest",
-		"coverage": "vitest run --coverage"
+		"coverage": "dotenv -e .env.test -- vitest run --coverage"
 	},
 	"keywords": [],
 	"author": "",

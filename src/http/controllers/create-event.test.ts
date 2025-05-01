@@ -1,6 +1,5 @@
-import { expect, test } from "vitest";
+import { describe, test } from "vitest";
 
-test("1 + 1 should equal 2", () => {
-	const result = 1 + 1;
-	expect(result).toBe(2);
+describe("http > controllers > events > create-event", () => {
+	test("should successfully create an event", () => {});
 });
