@@ -3,25 +3,25 @@ import type { MultipartFile } from "@fastify/multipart";
 
 interface CreateEventsService {
 	title: string;
-	imageUrl: MultipartFile;
+	image_url: MultipartFile;
 	tag: string;
 	description: string;
 	event_date: Date;
 	address: string;
-	max_participants: number | null;
+	max_participants?: number;
 }
 
 export async function createEventsService({
 	address,
 	description,
 	event_date,
-	imageUrl,
+	image_url,
 	max_participants,
 	tag,
 	title,
 }: CreateEventsService) {
 	const chunks: Buffer[] = [];
-	for await (const chunk of imageUrl.file) {
+	for await (const chunk of image_url.file) {
 		chunks.push(chunk);
 	}
 	const buffer = Buffer.concat(chunks);
@@ -32,7 +32,7 @@ export async function createEventsService({
 			address,
 			description,
 			event_date,
-			imageUrl: base64Image,
+			image_url: base64Image,
 			tag,
 			title,
 			max_participants,

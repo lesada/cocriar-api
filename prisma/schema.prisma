@@ -34,7 +34,7 @@ model SubscribedUser {
 model Event {
   id               String   @id @default(uuid())
   title            String
-  imageUrl         String
+  image_url        String
   tag              String
   description      String   @db.Text
   created_at       DateTime @default(now())

@@ -8,7 +8,7 @@ export async function separateFieldsAndFiles(req: FastifyRequest) {
 	let imageFile: MultipartFile | null = null;
 
 	for await (const part of parts) {
-		if (part.type === "file" && part.fieldname === "imageUrl") {
+		if (part.type === "file" && part.fieldname === "image_url") {
 			imageFile = part;
 		} else if (part.type === "field") {
 			fields[part.fieldname] = String(part.value);

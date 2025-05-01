@@ -27,7 +27,8 @@ const createEventBodySchema = z.object({
 	address: z.string(),
 	max_participants: z.coerce
 		.number()
-		.min(1, "Number of participants must be bigger than 0"),
+		.min(1, "Number of participants must be bigger than 0")
+		.optional(),
 });
 
 export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
@@ -47,7 +48,7 @@ export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
 
 	await createEventsService({
 		...parsed.data,
-		imageUrl: imageFile,
+		image_url: imageFile,
 	});
 
 	return rep.status(201).send();
