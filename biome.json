@@ -7,9 +7,7 @@
 	},
 	"linter": {
 		"enabled": true,
-		"rules": { "recommended": true, "suspicious": {
-        "useAwait": "error"
-      }}
+		"rules": { "recommended": true }
 	},
 	"organizeImports": {
 		"enabled": true

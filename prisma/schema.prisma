@@ -25,7 +25,8 @@ model SubscribedUser {
   cellphone String
   birthdate DateTime
   entity    String
-  Events    Event[]
+  Event     Event    @relation(fields: [event_id], references: [id])
+  event_id  String
 
   @@map("subscribed_users")
 }
@@ -41,8 +42,7 @@ model Event {
   address          String
   max_participants Int?
 
-  user_email             SubscribedUser @relation(fields: [subscribed_users_email], references: [email])
-  subscribed_users_email String
+  subscribed_users SubscribedUser[]
 
   @@map("events")
 }
