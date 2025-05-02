@@ -1,4 +1,5 @@
 import { EventNotFoundError } from "@/errors/event-not-found";
+import { UserAlreadySubscribedError } from "@/errors/user-already-subscribed";
 import { prisma } from "@/lib/prisma";
 
 interface CreateSubscriptionService {
@@ -25,6 +26,17 @@ export async function createSubscriptionService({
 
 	if (!eventExists) {
 		throw new EventNotFoundError(event_id);
+	}
+
+	const alreadySubscribed = await prisma.subscribedUser.findFirst({
+		where: {
+			event_id,
+			email,
+		},
+	});
+
+	if (alreadySubscribed) {
+		throw new UserAlreadySubscribedError(email, event_id);
 	}
 
 	const subscription = await prisma.subscribedUser.create({

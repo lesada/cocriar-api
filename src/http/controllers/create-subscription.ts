@@ -1,4 +1,5 @@
 import { EventNotFoundError } from "@/errors/event-not-found";
+import { UserAlreadySubscribedError } from "@/errors/user-already-subscribed";
 import { createSubscriptionService } from "@/services/event-subscription/create-subscription";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError, z } from "zod";
@@ -49,6 +50,14 @@ export async function createSubscription(
 			return rep.status(400).send({
 				error: "Validation error",
 				issues: err.format(),
+			});
+		}
+
+		if (err instanceof UserAlreadySubscribedError) {
+			return rep.status(409).send({
+				error: err.message,
+				email: err.email,
+				event_id: err.event_id,
 			});
 		}
 
