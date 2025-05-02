@@ -53,6 +53,10 @@ export async function createSubscription(
 			});
 		}
 
+		if (err instanceof EventNotFoundError) {
+			return rep.status(404).send({ error: err.message, event_id });
+		}
+
 		if (err instanceof UserAlreadySubscribedError) {
 			return rep.status(409).send({
 				error: err.message,
@@ -60,11 +64,6 @@ export async function createSubscription(
 				event_id: err.event_id,
 			});
 		}
-
-		if (err instanceof EventNotFoundError) {
-			return rep.status(404).send({ error: err.message, event_id });
-		}
-
 		return rep.status(500).send({ error: "Intern server error" });
 	}
 }
