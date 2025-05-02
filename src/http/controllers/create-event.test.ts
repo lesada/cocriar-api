@@ -1,0 +1,48 @@
+import type { FastifyReply, FastifyRequest } from "fastify"; // Importe o Fastify
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createEvent } from "./create-event";
+
+vi.mock("@/services/events/create-event", () => ({
+	createEventsService: vi.fn().mockResolvedValue({
+		id: "1",
+		title: "Sample Event",
+		tag: "Sample",
+		description: "This is a test event",
+		event_date: new Date("2025-05-01"),
+		address: "Sample Address",
+		max_participants: 100,
+		image_url: "http://example.com/image.jpg",
+	}),
+}));
+
+const body = {
+	title: "Title XYZ",
+	image_url:
+		"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAA6ElEQVR4nO3QQQ3AIADAQJhxpIOF9UVI7hQ0nXuswT/f7YCXmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFRzgswJGYSWUJwAAAABJRU5ErkJggg==",
+	description: "XXXX",
+	tag: "Tag X",
+	event_date: "2012-04-23T18:25:43.511Z",
+	address: "Fifth Avenue, 785",
+	max_participants: "100",
+};
+
+describe("http > controllers > events > create-event", () => {
+	let mockReply: FastifyReply;
+	let mockRequest: FastifyRequest;
+
+	beforeEach(() => {
+		mockReply = {
+			status: vi.fn().mockReturnThis(),
+			send: vi.fn().mockReturnThis(),
+		} as unknown as FastifyReply;
+
+		mockRequest = {
+			body,
+		} as FastifyRequest;
+	});
+
+	it("should return 201 and the created event", async () => {
+		await createEvent(mockRequest, mockReply);
+		expect(mockReply.status).toHaveBeenCalledWith(201);
+	});
+});
