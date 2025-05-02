@@ -48,7 +48,7 @@ export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
 
 	await createEventsService({
 		...parsed.data,
-		image_url: imageFile,
+		image: imageFile,
 	});
 
 	return rep.status(201).send();
