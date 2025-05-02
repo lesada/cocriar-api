@@ -19,7 +19,7 @@ function checkTypeImage(imageFile: MultipartFile, rep: FastifyReply) {
 	}
 }
 
-const createEventBodySchema = z.object({
+export const createEventBodySchema = z.object({
 	title: z.string(),
 	tag: z.string(),
 	description: z.string(),
@@ -46,10 +46,10 @@ export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
 		return rep.status(400).send(parsed.error.format());
 	}
 
-	await createEventsService({
+	const event = await createEventsService({
 		...parsed.data,
 		image: imageFile,
 	});
 
-	return rep.status(201).send();
+	return rep.status(201).send({ event });
 }

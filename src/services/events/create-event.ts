@@ -23,7 +23,7 @@ export async function createEventsService({
 }: CreateEventsService) {
 	const base64Image = await fileToBase64(image);
 
-	await prisma.event.create({
+	const event = await prisma.event.create({
 		data: {
 			address,
 			description,
@@ -34,4 +34,6 @@ export async function createEventsService({
 			max_participants,
 		},
 	});
+
+	return event;
 }

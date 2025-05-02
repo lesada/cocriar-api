@@ -1,13 +1,6 @@
 import { app } from "./app";
 import { env } from "./env";
 
-app.get("/health", async () => {
-	return {
-		status: "ok",
-	};
-});
-
-
 app
 	.listen({
 		host: "0.0.0.0",
