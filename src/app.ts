@@ -1,5 +1,4 @@
 import fastifyCors from "@fastify/cors";
-import fastifyMultipart from "@fastify/multipart";
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
 import fastify from "fastify";
@@ -8,14 +7,12 @@ import {
 	serializerCompiler,
 	validatorCompiler,
 } from "fastify-type-provider-zod";
+import { eventsRoutes } from "./http/routes/events";
 import { healthRoutes } from "./http/routes/health";
 
 export const app = fastify();
 
 app.register(fastifyCors, { origin: "*" });
-app.register(fastifyMultipart, {
-	attachFieldsToBody: true,
-});
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
@@ -35,9 +32,9 @@ app.register(fastifySwaggerUi, {
 	routePrefix: "/docs",
 });
 
-// app.register(eventsRoutes, {
-// 	prefix: "/events",
-// });
+app.register(eventsRoutes, {
+	prefix: "/events",
+});
 
 app.register(healthRoutes, {
 	prefix: "/health",

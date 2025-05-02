@@ -1,23 +1,7 @@
 import { createEventsService } from "@/services/events/create-event";
-import { separateFieldsAndFiles } from "@/utils/fields-and-files-multipart";
-import type { MultipartFile } from "@fastify/multipart";
+import { checkBase64MimeTypes } from "@/utils/check-base64-mimetypes";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-
-function checkTypeImage(imageFile: MultipartFile, rep: FastifyReply) {
-	const allowedMimeTypes = [
-		"image/jpeg",
-		"image/png",
-		"image/webp",
-		"image/jpg",
-	];
-
-	if (!allowedMimeTypes.includes(imageFile.mimetype)) {
-		return rep
-			.status(400)
-			.send({ error: "Invalid file type. Only images are allowed." });
-	}
-}
 
 export const createEventBodySchema = z.object({
 	title: z.string(),
@@ -29,27 +13,19 @@ export const createEventBodySchema = z.object({
 		.number()
 		.min(1, "Number of participants must be bigger than 0")
 		.optional(),
+	image_url: z.string(),
 });
 
 export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
-	const { fields, imageFile } = await separateFieldsAndFiles(req);
-
-	if (!imageFile) {
-		return rep.status(400).send({ error: "Image file is required." });
-	}
-
-	checkTypeImage(imageFile, rep);
-
-	const parsed = createEventBodySchema.safeParse(fields);
+	const parsed = createEventBodySchema.safeParse(req.body);
 
 	if (!parsed.success) {
 		return rep.status(400).send(parsed.error.format());
 	}
 
-	const event = await createEventsService({
-		...parsed.data,
-		image: imageFile,
-	});
+	checkBase64MimeTypes(parsed.data.image_url, rep);
+
+	const event = await createEventsService(parsed.data);
 
 	return rep.status(201).send({ event });
 }

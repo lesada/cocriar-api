@@ -1,10 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import { fileToBase64 } from "@/utils/file-to-base64";
-import type { MultipartFile } from "@fastify/multipart";
 
 interface CreateEventsService {
 	title: string;
-	image: MultipartFile;
+	image_url: string;
 	tag: string;
 	description: string;
 	event_date: Date;
@@ -16,19 +14,17 @@ export async function createEventsService({
 	address,
 	description,
 	event_date,
-	image,
+	image_url,
 	max_participants,
 	tag,
 	title,
 }: CreateEventsService) {
-	const base64Image = await fileToBase64(image);
-
 	const event = await prisma.event.create({
 		data: {
 			address,
 			description,
 			event_date,
-			image_url: base64Image,
+			image_url,
 			tag,
 			title,
 			max_participants,
