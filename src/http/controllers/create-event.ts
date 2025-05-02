@@ -1,5 +1,4 @@
 import { createEventsService } from "@/services/events/create-event";
-import { checkBase64MimeTypes } from "@/utils/check-base64-mimetypes";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -17,15 +16,7 @@ export const createEventBodySchema = z.object({
 });
 
 export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
-	const parsed = createEventBodySchema.safeParse(req.body);
-
-	if (!parsed.success) {
-		return rep.status(400).send(parsed.error.format());
-	}
-
-	checkBase64MimeTypes(parsed.data.image_url, rep);
-
-	const event = await createEventsService(parsed.data);
-
+	const parsed = createEventBodySchema.parse(req.body);
+	const event = await createEventsService(parsed);
 	return rep.status(201).send({ event });
 }
