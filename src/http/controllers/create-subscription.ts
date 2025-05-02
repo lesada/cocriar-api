@@ -64,6 +64,7 @@ export async function createSubscription(
 				event_id: err.event_id,
 			});
 		}
+
 		return rep.status(500).send({ error: "Intern server error" });
 	}
 }

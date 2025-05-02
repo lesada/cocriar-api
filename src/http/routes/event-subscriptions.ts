@@ -3,6 +3,7 @@ import {
 	subscribeParamsSchema,
 } from "@/http/controllers/create-subscription";
 import type { FastifyInstance } from "fastify";
+import { z } from "zod";
 import { createSubscription } from "../controllers/create-subscription";
 import {
 	UnsubscribeBodySchema,
@@ -22,7 +23,9 @@ export async function eventSubscriptions(app: FastifyInstance) {
 				params: subscribeParamsSchema,
 				body: subscribeBodySchema,
 				response: {
-					201: subscribeBodySchema.merge(subscribeParamsSchema),
+					201: z.object({
+						subscription: subscribeBodySchema.merge(subscribeParamsSchema),
+					}),
 				},
 			},
 		},
@@ -40,7 +43,7 @@ export async function eventSubscriptions(app: FastifyInstance) {
 				params: UnsubscribeParamsSchema,
 				body: UnsubscribeBodySchema,
 				response: {
-					204: UnsubscribeBodySchema.merge(UnsubscribeParamsSchema),
+					204: z.object({}),
 				},
 			},
 		},
