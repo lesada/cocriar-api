@@ -1,6 +1,7 @@
+import { EventNotFoundError } from "@/errors/event-not-found";
 import { createSubscriptionService } from "@/services/event-subscription/create-subscription";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { z } from "zod";
+import { ZodError, z } from "zod";
 
 export const subscribeBodySchema = z.object({
 	birthdate: z.coerce.date(),
@@ -19,13 +20,42 @@ export async function createSubscription(
 	rep: FastifyReply,
 ) {
 	const parsedParams = subscribeParamsSchema.safeParse(req.params);
-	if (parsedParams.error) return;
+	if (!parsedParams.success) {
+		return rep.status(400).send({
+			error: "Invalid params",
+			issues: parsedParams.error.format(),
+		});
+	}
 
 	const { event_id } = parsedParams.data;
-	const parsed = subscribeBodySchema.parse(req.body);
-	const event = await createSubscriptionService({
-		...parsed,
-		event_id,
-	});
-	return rep.status(201).send({ event });
+
+	const parsedBody = subscribeBodySchema.safeParse(req.body);
+	if (!parsedBody.success) {
+		return rep.status(400).send({
+			error: "Invalid body schema",
+			issues: parsedBody.error.format(),
+		});
+	}
+
+	try {
+		const subscription = await createSubscriptionService({
+			...parsedBody.data,
+			event_id,
+		});
+
+		return rep.status(201).send({ subscription });
+	} catch (err) {
+		if (err instanceof ZodError) {
+			return rep.status(400).send({
+				error: "Validation error",
+				issues: err.format(),
+			});
+		}
+
+		if (err instanceof EventNotFoundError) {
+			return rep.status(404).send({ error: err.message, event_id });
+		}
+
+		return rep.status(500).send({ error: "Intern server error" });
+	}
 }
