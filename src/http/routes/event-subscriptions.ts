@@ -3,10 +3,14 @@ import {
 	subscribeParamsSchema,
 } from "@/http/controllers/create-subscription";
 import type { FastifyInstance } from "fastify";
-import { z } from "zod";
 import { createSubscription } from "../controllers/create-subscription";
+import {
+	UnsubscribeBodySchema,
+	UnsubscribeParamsSchema,
+	deleteSubscription,
+} from "../controllers/delete-subscription";
 
-export async function subscribeToEventRoutes(app: FastifyInstance) {
+export async function eventSubscriptions(app: FastifyInstance) {
 	app.post(
 		"/:event_id",
 		{
@@ -19,24 +23,27 @@ export async function subscribeToEventRoutes(app: FastifyInstance) {
 				body: subscribeBodySchema,
 				response: {
 					201: subscribeBodySchema.merge(subscribeParamsSchema),
-					400: z.object({
-						error: z.string(),
-					}),
-					404: z.object({
-						error: z.string(),
-						event_id: z.string(),
-					}),
-					409: z.object({
-						error: z.string(),
-						event_id: z.string(),
-						email: z.string(),
-					}),
-					500: z.object({
-						error: z.string(),
-					}),
 				},
 			},
 		},
 		createSubscription,
+	);
+
+	app.delete(
+		"/:event_id",
+		{
+			schema: {
+				summary: "Unsubscribe to an event",
+				description:
+					"Unubscribe a user to an event by providing event_id and the email in the body",
+				tags: ["Subscriptions"],
+				params: UnsubscribeParamsSchema,
+				body: UnsubscribeBodySchema,
+				response: {
+					204: UnsubscribeBodySchema.merge(UnsubscribeParamsSchema),
+				},
+			},
+		},
+		deleteSubscription,
 	);
 }

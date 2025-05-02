@@ -7,9 +7,9 @@ import {
 	serializerCompiler,
 	validatorCompiler,
 } from "fastify-type-provider-zod";
+import { eventSubscriptions } from "./http/routes/event-subscriptions";
 import { eventsRoutes } from "./http/routes/events";
 import { healthRoutes } from "./http/routes/health";
-import { subscribeToEventRoutes } from "./http/routes/subscribe-to-event";
 
 export const app = fastify();
 
@@ -36,7 +36,7 @@ app.register(fastifySwaggerUi, {
 app.register(eventsRoutes, {
 	prefix: "/events",
 });
-app.register(subscribeToEventRoutes, {
+app.register(eventSubscriptions, {
 	prefix: "/events/subscribe",
 });
 
