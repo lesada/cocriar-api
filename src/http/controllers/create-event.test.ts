@@ -4,14 +4,14 @@ import { createEvent } from "./create-event";
 
 vi.mock("@/services/events/create-event", () => ({
 	createEventsService: vi.fn().mockResolvedValue({
-		id: "1",
-		title: "Sample Event",
-		tag: "Sample",
-		description: "This is a test event",
-		event_date: new Date("2025-05-01"),
-		address: "Sample Address",
-		max_participants: 100,
-		image_url: "http://example.com/image.jpg",
+		title: "Title XYZ",
+		image_url:
+			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAA6ElEQVR4nO3QQQ3AIADAQJhxpIOF9UVI7hQ0nXuswT/f7YCXmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFRzgswJGYSWUJwAAAABJRU5ErkJggg==",
+		description: "XXXX",
+		tag: "Tag X",
+		event_date: "2012-04-23T18:25:43.511Z",
+		address: "Fifth Avenue, 785",
+		max_participants: "100",
 	}),
 }));
 
