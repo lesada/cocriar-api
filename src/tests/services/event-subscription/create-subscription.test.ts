@@ -15,7 +15,7 @@ describe("services > create-subscription", () => {
 	};
 
 	it("should throw EventNotFoundError if event does not exist", async () => {
-		vi.mocked(prisma.event.findUnique).mockResolvedValueOnce(null); // Evento não encontrado
+		vi.mocked(prisma.event.findUnique).mockResolvedValueOnce(null);
 
 		await expect(createSubscriptionService(validPayload)).rejects.toThrowError(
 			new EventNotFoundError(validPayload.event_id),
