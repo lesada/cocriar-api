@@ -10,6 +10,10 @@ import {
 	deleteArticleParamsSchema,
 } from "../controllers/articles/delete-article";
 import {
+	getArticleById,
+	getArticleByIdResponseSchema,
+} from "../controllers/articles/get-article-by-id";
+import {
 	getArticles,
 	getArticlesResponseSchema,
 } from "../controllers/articles/get-articles";
@@ -32,6 +36,20 @@ export async function articlesRoutes(app: FastifyInstance) {
 			},
 		},
 		getArticles,
+	);
+
+	app.get(
+		"/:article_id",
+		{
+			schema: {
+				summary: "Search by article id",
+				tags: ["Articles"],
+				response: {
+					200: getArticleByIdResponseSchema,
+				},
+			},
+		},
+		getArticleById,
 	);
 
 	app.post(

@@ -1,3 +1,4 @@
+import { ArticleNotFoundError } from "@/errors/article-not-found";
 import { prisma } from "@/lib/prisma";
 
 interface CreateArticleService {
@@ -17,18 +18,21 @@ export async function updateArticleService({
 	title,
 	content,
 }: CreateArticleService) {
-	const article = await prisma.article.update({
-		where: {
-			id,
-		},
-		data: {
-			description,
-			image_url,
-			category,
-			title,
-			content,
-		},
-	});
-
-	return article;
+	try {
+		const article = await prisma.article.update({
+			where: {
+				id,
+			},
+			data: {
+				description,
+				image_url,
+				category,
+				title,
+				content,
+			},
+		});
+		return article;
+	} catch {
+		throw new ArticleNotFoundError(id);
+	}
 }
