@@ -9,6 +9,14 @@ beforeAll(async () => {
 		prisma: {
 			event: {
 				create: vi.fn(),
+				findUnique: vi.fn(),
+				findMany: vi.fn(),
+			},
+			subscribedUser: {
+				create: vi.fn(),
+				delete: vi.fn(),
+				findFirst: vi.fn(),
+				findMany: vi.fn(),
 			},
 		},
 	}));
