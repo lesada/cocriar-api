@@ -24,6 +24,7 @@ beforeAll(async () => {
 				findFirst: vi.fn(),
 				findMany: vi.fn(),
 				update: vi.fn(),
+				findUniqueOrThrow: vi.fn(),
 			},
 		},
 	}));
