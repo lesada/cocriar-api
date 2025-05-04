@@ -1,4 +1,4 @@
-import { createEvent } from "@/http/controllers/create-event";
+import { createEvent } from "@/http/controllers/events/create-event";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

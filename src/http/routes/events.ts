@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import {
 	createEvent,
 	createEventBodySchema,
-} from "../controllers/create-event";
+} from "../controllers/events/create-event";
 
 export async function eventsRoutes(app: FastifyInstance) {
 	app.post(
