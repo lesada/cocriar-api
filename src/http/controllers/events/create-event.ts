@@ -1,4 +1,4 @@
-import { createEventsService } from "@/services/events/create-event";
+import { createEventService } from "@/services/events/create-event";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -17,6 +17,6 @@ export const createEventBodySchema = z.object({
 
 export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
 	const parsed = createEventBodySchema.parse(req.body);
-	const event = await createEventsService(parsed);
+	const event = await createEventService(parsed);
 	return rep.status(201).send({ event });
 }

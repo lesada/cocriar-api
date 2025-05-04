@@ -1,19 +1,20 @@
-import { prisma } from "@/lib/prisma"
+import { EventNotFoundError } from "@/errors/event-not-found";
+import { prisma } from "@/lib/prisma";
 
 interface DeleteEventsService {
-  id: string
+	event_id: string;
 }
 
-export async function deleteEventsService({id} : DeleteEventsService) {
-  const event = await prisma.event.findUnique({
-    where: { id }
-  })
+export async function deleteEventsService({ event_id }: DeleteEventsService) {
+	const event = await prisma.event.findUnique({
+		where: { id: event_id },
+	});
 
-  if (!event) {
-    throw new Error("Evento não encontrado")
-  }
+	if (!event) {
+		throw new EventNotFoundError(event_id);
+	}
 
-  await prisma.event.delete({
-    where: { id }
-  })
+	await prisma.event.delete({
+		where: { id: event_id },
+	});
 }
