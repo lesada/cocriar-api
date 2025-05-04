@@ -1,31 +1,64 @@
-import { EventNotFoundError } from "@/errors/event-not-found";
-import { prisma } from "@/lib/prisma";
-import { deleteEventService } from "@/services/events/delete-event";
-import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+	deleteEvent,
+	deleteEventParamsSchema,
+} from "@/http/controllers/events/delete-event";
+import type { FastifyReply, FastifyRequest } from "fastify";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-describe("services > events > delete-event", () => {
-	const event_id = "3ac41c9e-5b58-45cd-8ed7-f9a2b2a2ccf7";
+describe("http > controllers > event-subscription > delete-subscription", () => {
+	let mockReply: FastifyReply;
+	let mockRequest: FastifyRequest;
 
 	beforeEach(() => {
-		vi.clearAllMocks();
+		mockReply = {
+			status: vi.fn().mockReturnThis(),
+			send: vi.fn().mockReturnThis(),
+		} as unknown as FastifyReply;
+
+		mockRequest = {
+			params: { event_id: "invalid-event-id" },
+		} as FastifyRequest;
 	});
 
-	it("should throw EventNotFoundError if event does not exist", async () => {
-		(prisma.event.findUnique as Mock).mockResolvedValueOnce(null);
+	it("should return 400 if params are invalid", async () => {
+		const mockFormat = vi.fn().mockReturnValueOnce([
+			{
+				message: "Invalid event_id",
+				path: ["event_id"],
+				code: "invalid_type",
+			},
+		]);
 
-		await expect(deleteEventService({ event_id })).rejects.toThrow(
-			EventNotFoundError,
-		);
-	});
+		const mockSafeParseParams = vi.fn().mockReturnValueOnce({
+			success: false,
+			error: {
+				format: mockFormat,
+				issues: [
+					{
+						message: "Invalid event_id",
+						path: ["event_id"],
+						code: "invalid_type",
+					},
+				],
+				message: "Invalid event_id",
+				isEmpty: false,
+			},
+		});
 
-	it("should call delete if event exists", async () => {
-		(prisma.event.findUnique as Mock).mockResolvedValueOnce({ id: event_id });
-		(prisma.event.delete as Mock).mockResolvedValueOnce(undefined);
+		deleteEventParamsSchema.safeParse = mockSafeParseParams;
 
-		await deleteEventService({ event_id });
+		await deleteEvent(mockRequest, mockReply);
 
-		expect(prisma.event.delete).toHaveBeenCalledWith({
-			where: { id: event_id },
+		expect(mockReply.status).toHaveBeenCalledWith(400);
+		expect(mockReply.send).toHaveBeenCalledWith({
+			error: "Invalid params",
+			issues: [
+				{
+					message: "Invalid event_id",
+					path: ["event_id"],
+					code: "invalid_type",
+				},
+			],
 		});
 	});
 });
