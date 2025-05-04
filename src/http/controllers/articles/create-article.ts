@@ -23,7 +23,16 @@ export const createArticleResponseSchema = z.object({
 });
 
 export async function createArticle(req: FastifyRequest, rep: FastifyReply) {
-	const parsed = createArticleBodySchema.parse(req.body);
-	const article = await createArticleService(parsed);
+	const parsed = createArticleBodySchema.safeParse(req.body);
+
+	if (!parsed.success) {
+		return rep.status(400).send({
+			error: "Invalid body schema",
+			issues: parsed.error.format(),
+		});
+	}
+
+	const article = await createArticleService(parsed.data);
+
 	return rep.status(201).send({ article });
 }

@@ -13,6 +13,11 @@ import {
 	getArticles,
 	getArticlesResponseSchema,
 } from "../controllers/articles/get-articles";
+import {
+	updateArticle,
+	updateArticleBodySchema,
+	updateArticleParamsSchema,
+} from "../controllers/articles/update-article";
 
 export async function articlesRoutes(app: FastifyInstance) {
 	app.get(
@@ -57,5 +62,27 @@ export async function articlesRoutes(app: FastifyInstance) {
 			},
 		},
 		deleteArticle,
+	);
+
+	app.patch(
+		"/:article_id",
+		{
+			schema: {
+				summary: "Update an article",
+				tags: ["Articles"],
+				params: updateArticleParamsSchema,
+				body: updateArticleBodySchema,
+				response: {
+					200: z.object({
+						article: updateArticleBodySchema.merge(
+							z.object({
+								id: z.string(),
+							}),
+						),
+					}),
+				},
+			},
+		},
+		updateArticle,
 	);
 }
