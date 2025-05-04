@@ -18,6 +18,13 @@ beforeAll(async () => {
 				findFirst: vi.fn(),
 				findMany: vi.fn(),
 			},
+			article: {
+				create: vi.fn(),
+				delete: vi.fn(),
+				findFirst: vi.fn(),
+				findMany: vi.fn(),
+				update: vi.fn(),
+			},
 		},
 	}));
 
