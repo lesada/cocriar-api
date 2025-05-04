@@ -1,9 +1,14 @@
 import type { FastifyInstance } from "fastify";
+import { z } from "zod";
 import {
 	createArticle,
 	createArticleBodySchema,
 	createArticleResponseSchema,
 } from "../controllers/articles/create-article";
+import {
+	deleteArticle,
+	deleteArticleParamsSchema,
+} from "../controllers/articles/delete-article";
 import {
 	getArticles,
 	getArticlesResponseSchema,
@@ -37,5 +42,20 @@ export async function articlesRoutes(app: FastifyInstance) {
 			},
 		},
 		createArticle,
+	);
+
+	app.delete(
+		"/:article_id",
+		{
+			schema: {
+				summary: "Delete an article",
+				tags: ["Articles"],
+				params: deleteArticleParamsSchema,
+				response: {
+					204: z.object({}),
+				},
+			},
+		},
+		deleteArticle,
 	);
 }
