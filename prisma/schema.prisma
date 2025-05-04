@@ -48,3 +48,15 @@ model Event {
 
   @@map("events")
 }
+
+model Article {
+  id          String   @id @default(uuid())
+  title       String
+  image_url   String
+  category    String
+  description String   @db.Text
+  content     String   @db.Text
+  created_at  DateTime @default(now())
+
+  @@map("articles")
+}
