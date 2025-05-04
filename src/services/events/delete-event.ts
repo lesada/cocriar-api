@@ -6,13 +6,13 @@ interface DeleteEventService {
 }
 
 export async function deleteEventService({ event_id }: DeleteEventService) {
-	const event = await prisma.event.findUnique({
-		where: { id: event_id },
-	});
-
-	if (!event) {
-		throw new EventNotFoundError(event_id);
-	}
+	await prisma.event
+		.findUniqueOrThrow({
+			where: { id: event_id },
+		})
+		.catch(() => {
+			throw new EventNotFoundError(event_id);
+		});
 
 	await prisma.event.delete({
 		where: { id: event_id },
