@@ -1,5 +1,5 @@
 import { EventNotFoundError } from "@/errors/event-not-found";
-import { deleteEventsService } from "@/services/events/delete-event";
+import { deleteEventService } from "@/services/events/delete-event";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -18,7 +18,7 @@ export async function deleteEvent(req: FastifyRequest, rep: FastifyReply) {
 	}
 
 	try {
-		await deleteEventsService({ event_id: parsedParams.data.event_id });
+		await deleteEventService({ event_id: parsedParams.data.event_id });
 		return rep.status(204).send();
 	} catch (err) {
 		if (err instanceof EventNotFoundError) {
@@ -26,5 +26,7 @@ export async function deleteEvent(req: FastifyRequest, rep: FastifyReply) {
 				.status(404)
 				.send({ error: err.message, event_id: parsedParams.data.event_id });
 		}
+
+		return rep.status(500).send({ error: "Internal server error" });
 	}
 }
