@@ -1,15 +1,15 @@
 import {
 	subscribeBodySchema,
 	subscribeParamsSchema,
-} from "@/http/controllers/create-subscription";
+} from "@/http/controllers/event-subscription/create-subscription";
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
-import { createSubscription } from "../controllers/create-subscription";
+import { createSubscription } from "../controllers/event-subscription/create-subscription";
 import {
 	UnsubscribeBodySchema,
 	UnsubscribeParamsSchema,
 	deleteSubscription,
-} from "../controllers/delete-subscription";
+} from "../controllers/event-subscription/delete-subscription";
 
 export async function eventSubscriptions(app: FastifyInstance) {
 	app.post(
