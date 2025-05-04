@@ -10,6 +10,7 @@ export async function eventsRoutes(app: FastifyInstance) {
 		{
 			schema: {
 				body: createEventBodySchema,
+				tags: ["Events"],
 			},
 		},
 		createEvent,
