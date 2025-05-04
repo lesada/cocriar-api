@@ -1,6 +1,14 @@
-import type { FastifyReply, FastifyRequest } from "fastify"; // Importe o Fastify
+import type { FastifyReply, FastifyRequest } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createEvent } from "./create-event";
+
+vi.mock("@/lib/prisma", () => ({
+	prisma: {
+		event: {
+			create: vi.fn(),
+		},
+	},
+}));
 
 vi.mock("@/services/events/create-event", () => ({
 	createEventsService: vi.fn().mockResolvedValue({
