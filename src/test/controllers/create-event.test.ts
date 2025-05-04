@@ -1,6 +1,6 @@
+import { createEvent } from "@/http/controllers/create-event";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createEvent } from "./create-event";
 
 vi.mock("@/services/events/create-event", () => ({
 	createEventsService: vi.fn().mockResolvedValue({
