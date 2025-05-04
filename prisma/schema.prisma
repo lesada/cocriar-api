@@ -20,14 +20,16 @@ model Newsletter {
 }
 
 model SubscribedUser {
-  email     String   @id
+  id        String   @id @default(uuid())
+  email     String
   name      String
   cellphone String
   birthdate DateTime
   entity    String
-  Event     Event    @relation(fields: [event_id], references: [id])
   event_id  String
+  Event     Event    @relation(fields: [event_id], references: [id])
 
+  @@unique([email, event_id])
   @@map("subscribed_users")
 }
 
