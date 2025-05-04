@@ -1,32 +1,15 @@
-import { deleteSubscription } from "@/http/controllers/event-subscription/delete-subscription";
+import {
+	UnsubscribeParamsSchema,
+	deleteSubscription,
+} from "@/http/controllers/event-subscription/delete-subscription";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/services/events/create-event", () => ({
-	createEventsService: vi.fn().mockResolvedValue({
-		title: "Title XYZ",
-		image_url:
-			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAA6ElEQVR4nO3QQQ3AIADAQJhxpIOF9UVI7hQ0nXuswT/f7YCXmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFRzgswJGYSWUJwAAAABJRU5ErkJggg==",
-		description: "XXXX",
-		tag: "Tag X",
-		event_date: "2012-04-23T18:25:43.511Z",
-		address: "Fifth Avenue, 785",
-		max_participants: "100",
-	}),
-}));
-
 const body = {
-	title: "Title XYZ",
-	image_url:
-		"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAA6ElEQVR4nO3QQQ3AIADAQJhxpIOF9UVI7hQ0nXuswT/f7YCXmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFZgVmBWYFRzgswJGYSWUJwAAAABJRU5ErkJggg==",
-	description: "XXXX",
-	tag: "Tag X",
-	event_date: "2012-04-23T18:25:43.511Z",
-	address: "Fifth Avenue, 785",
-	max_participants: "100",
+	event_id: "3ac41c9e-5b58-45cd-8ed7-f9a2b2a2ccf7",
 };
 
-describe("http > controllers > events > create-event", () => {
+describe("http > controllers > event-subscription > delete-subscription", () => {
 	let mockReply: FastifyReply;
 	let mockRequest: FastifyRequest;
 
@@ -38,11 +21,91 @@ describe("http > controllers > events > create-event", () => {
 
 		mockRequest = {
 			body,
+			params: { event_id: "invalid-event-id" },
 		} as FastifyRequest;
 	});
 
-	it("should return error 400", async () => {
+	it("should return 400 if params are invalid", async () => {
+		const mockFormat = vi.fn().mockReturnValueOnce([
+			{
+				message: "Invalid event_id",
+				path: ["event_id"],
+				code: "invalid_type",
+			},
+		]);
+
+		const mockSafeParseParams = vi.fn().mockReturnValueOnce({
+			success: false,
+			error: {
+				format: mockFormat,
+				issues: [
+					{
+						message: "Invalid event_id",
+						path: ["event_id"],
+						code: "invalid_type",
+					},
+				],
+				message: "Invalid event_id",
+				isEmpty: false,
+			},
+		});
+
+		UnsubscribeParamsSchema.safeParse = mockSafeParseParams;
+
 		await deleteSubscription(mockRequest, mockReply);
+
 		expect(mockReply.status).toHaveBeenCalledWith(400);
+		expect(mockReply.send).toHaveBeenCalledWith({
+			error: "Invalid params",
+			issues: [
+				{
+					message: "Invalid event_id",
+					path: ["event_id"],
+					code: "invalid_type",
+				},
+			],
+		});
+	});
+
+	it("should return 400 if params are invalid", async () => {
+		const mockFormatBody = vi.fn().mockReturnValueOnce([
+			{
+				message: "Invalid body data",
+				path: ["data"],
+				code: "invalid_type",
+			},
+		]);
+
+		const mockSafeParseParams = vi.fn().mockReturnValueOnce({
+			success: false,
+			error: {
+				format: mockFormatBody,
+				issues: [
+					{
+						message: "Invalid event_id",
+						path: ["event_id"],
+						code: "invalid_type",
+					},
+				],
+				message: "Invalid event_id",
+				isEmpty: false,
+			},
+		});
+
+		UnsubscribeParamsSchema.safeParse = mockSafeParseParams;
+
+		await deleteSubscription(mockRequest, mockReply);
+
+		expect(mockReply.status).toHaveBeenCalledWith(400);
+		expect(mockReply.send).toHaveBeenCalledWith({
+			error: "Invalid params",
+			issues: [
+				{
+					message: "Invalid body data",
+					path: ["data"],
+					code: "invalid_type",
+				},
+			],
+		});
 	});
 });
