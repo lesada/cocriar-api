@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { mockServer } from "@/test/setup";
 import { describe, expect, it, test, vi } from "vitest";
 
-describe("POST /events/subscribe/:event_id", () => {
+describe("http > routes > event-subscription", () => {
 	const validPayload = {
 		event_id: "3ac41c9e-5b58-45cd-8ed7-f9a2b2a2ccf7",
 		email: "user@example.com",

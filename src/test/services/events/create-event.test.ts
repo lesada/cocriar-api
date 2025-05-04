@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { createEventsService } from "@/services/events/create-event";
 import { type Mock, beforeEach, describe, expect, test } from "vitest";
 
-describe("createEventsService", () => {
+describe("services > create-events", () => {
 	const mockEventInput = {
 		title: "Test Event",
 		image_url: "https://example.com/image.png",
