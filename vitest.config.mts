@@ -9,6 +9,6 @@ export default defineConfig({
 			reporter: ["text", "lcov"],
 			reportsDirectory: "./coverage",
 		},
-		setupFiles: ["./src/test/setup.ts"],
+		setupFiles: ["./src/tests/setup.ts"],
 	},
 });
