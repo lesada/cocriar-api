@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { mockServer } from "@/test/setup";
+import { mockServer } from "@/tests/setup";
 import { type Mock, describe, expect, it } from "vitest";
 
 describe("http > routes > events", () => {
