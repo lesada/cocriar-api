@@ -25,7 +25,7 @@ describe("http > controllers > event-subscription > delete-subscription", () => 
 		} as FastifyRequest;
 	});
 
-	it("should return 400 if params are invalid", async () => {
+	it("should return 400 if route params are invalid", async () => {
 		const mockFormat = vi.fn().mockReturnValueOnce([
 			{
 				message: "Invalid event_id",
@@ -67,7 +67,7 @@ describe("http > controllers > event-subscription > delete-subscription", () => 
 		});
 	});
 
-	it("should return 400 if params are invalid", async () => {
+	it("should return 400 if body params are invalid", async () => {
 		const mockFormatBody = vi.fn().mockReturnValueOnce([
 			{
 				message: "Invalid body data",
