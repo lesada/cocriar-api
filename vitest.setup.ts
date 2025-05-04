@@ -1,6 +1,10 @@
-import { beforeAll, vi } from "vitest";
+import { app } from "@/app";
+import supertest from "supertest";
+import { afterAll, beforeAll, vi } from "vitest";
 
-beforeAll(() => {
+export const mockServer = supertest(app.server);
+
+beforeAll(async () => {
 	vi.mock("@/lib/prisma", () => ({
 		prisma: {
 			event: {
@@ -8,4 +12,10 @@ beforeAll(() => {
 			},
 		},
 	}));
+
+	await app.ready();
+});
+
+afterAll(async () => {
+	await app.close();
 });

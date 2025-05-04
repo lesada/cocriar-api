@@ -1,23 +1,9 @@
-import { healthRoutes } from "@/http/routes/health";
-import { type FastifyInstance, fastify } from "fastify";
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
+import { mockServer } from "../../../vitest.setup";
 
 describe("http > routes > health", () => {
-	let app: FastifyInstance;
-
-	beforeEach(async () => {
-		app = fastify();
-		await healthRoutes(app);
-		await app.ready();
-	});
-
 	it("should return 200 and status ok", async () => {
-		const response = await app.inject({
-			method: "GET",
-			url: "/",
-		});
-
-		expect(response.statusCode).toBe(200);
-		expect(response.json()).toEqual({ status: "ok" });
+		const response = await mockServer.get("/health").expect(200);
+		expect(response.body).toEqual({ status: "ok" });
 	});
 });
