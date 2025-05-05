@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { createArticleService } from "@/services/articles/create-article";
 import { type Mock, beforeEach, describe, expect, test } from "vitest";
 
-describe("services > create-article", () => {
+describe("services > articles > create-article", () => {
 	const mockArticleInput = {
 		title: "Test Article",
 		image_url: "https://example.com/image.png",

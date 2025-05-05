@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getArticlesService } from "@/services/articles/get-articles";
 import { type Mock, beforeEach, describe, expect, test } from "vitest";
 
-describe("services > get-articles", () => {
+describe("services > articles > get-articles", () => {
 	const mockArticles = [
 		{
 			id: "article-1",
