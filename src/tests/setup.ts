@@ -12,6 +12,7 @@ beforeAll(async () => {
 				findUnique: vi.fn(),
 				findMany: vi.fn(),
 				delete: vi.fn(),
+				update: vi.fn(),
 				findUniqueOrThrow: vi.fn(),
 			},
 			subscribedUser: {

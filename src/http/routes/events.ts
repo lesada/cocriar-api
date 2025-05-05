@@ -1,4 +1,5 @@
 import type { FastifyInstance } from "fastify";
+import { z } from "zod";
 import {
 	createEvent,
 	createEventBodySchema,
@@ -7,6 +8,11 @@ import {
 	deleteEvent,
 	deleteEventParamsSchema,
 } from "../controllers/events/delete-event";
+import {
+	updateEvent,
+	updateEventBodySchema,
+	updateEventParamsSchema,
+} from "../controllers/events/update-event";
 
 export async function eventsRoutes(app: FastifyInstance) {
 	app.post(
@@ -29,5 +35,27 @@ export async function eventsRoutes(app: FastifyInstance) {
 			},
 		},
 		deleteEvent,
+	);
+
+	app.patch(
+		"/:event_id",
+		{
+			schema: {
+				summary: "Update Event",
+				tags: ["Events"],
+				params: updateEventParamsSchema,
+				body: updateEventBodySchema,
+				response: {
+					200: z.object({
+						event: updateEventBodySchema.merge(
+							z.object({
+								id: z.string(),
+							}),
+						),
+					}),
+				},
+			},
+		},
+		updateEvent,
 	);
 }
