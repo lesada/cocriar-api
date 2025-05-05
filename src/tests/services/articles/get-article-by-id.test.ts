@@ -28,7 +28,7 @@ describe("services > get-article-by-id", () => {
 	test("should throw ArticleNotFoundError if article is not found", async () => {
 		const articleId = "non-existent-article";
 
-		(prisma.article.findUniqueOrThrow as any).mockRejectedValue(
+		(prisma.article.findUniqueOrThrow as Mock).mockRejectedValue(
 			new Error("Not found"),
 		);
 

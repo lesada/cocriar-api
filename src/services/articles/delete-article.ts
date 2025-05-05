@@ -1,3 +1,4 @@
+import { ArticleNotFoundError } from "@/errors/article-not-found";
 import { prisma } from "@/lib/prisma";
 
 interface DeleteArticleService {
@@ -5,9 +6,13 @@ interface DeleteArticleService {
 }
 
 export async function deleteArticleService({ id }: DeleteArticleService) {
-	await prisma.article.delete({
-		where: {
-			id,
-		},
-	});
+	try {
+		await prisma.article.delete({
+			where: {
+				id,
+			},
+		});
+	} catch {
+		throw new ArticleNotFoundError(id);
+	}
 }
