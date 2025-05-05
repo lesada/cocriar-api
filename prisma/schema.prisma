@@ -67,9 +67,9 @@ model Testimonial {
   job_description String
   company         String
   content         String
-  aproved         String
   rating          Int
   created_at      DateTime @default(now())
+  approved        Boolean  @default(false)
 
   @@map("testimonials")
 }

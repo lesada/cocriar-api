@@ -53,9 +53,9 @@ CREATE TABLE "testimonials" (
     "job_description" TEXT NOT NULL,
     "company" TEXT NOT NULL,
     "content" TEXT NOT NULL,
-    "aproved" TEXT NOT NULL,
     "rating" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "approved" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "testimonials_pkey" PRIMARY KEY ("id")
 );
