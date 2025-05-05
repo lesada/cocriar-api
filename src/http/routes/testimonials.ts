@@ -42,7 +42,7 @@ export async function testimonialsRoutes(app: FastifyInstance) {
 		"/approved",
 		{
 			schema: {
-				summary: "List all testimonials",
+				summary: "List approved testimonials",
 				tags: ["Testimonials"],
 				response: {
 					200: getApprovedTestimonialsResponseSchema,

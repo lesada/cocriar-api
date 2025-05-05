@@ -19,6 +19,7 @@ export async function eventsRoutes(app: FastifyInstance) {
 			schema: {
 				body: createEventBodySchema,
 				tags: ["Events"],
+				summary: "List all events",
 			},
 		},
 		createEvent,
@@ -30,6 +31,7 @@ export async function eventsRoutes(app: FastifyInstance) {
 			schema: {
 				params: deleteEventParamsSchema,
 				tags: ["Events"],
+				summary: "Delete an event",
 			},
 		},
 		deleteEvent,
