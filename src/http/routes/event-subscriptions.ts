@@ -11,7 +11,7 @@ import {
 	deleteSubscription,
 } from "../controllers/event-subscription/delete-subscription";
 
-export async function eventSubscriptions(app: FastifyInstance) {
+export async function eventSubscriptionsRoutes(app: FastifyInstance) {
 	app.post(
 		"/:event_id",
 		{

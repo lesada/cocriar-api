@@ -14,6 +14,11 @@ import {
 	updateEventParamsSchema,
 } from "../controllers/events/update-event";
 
+import {
+	getEvents,
+	getEventsResponseSchema,
+} from "../controllers/events/get-events";
+
 export async function eventsRoutes(app: FastifyInstance) {
 	app.post(
 		"/",
@@ -57,5 +62,19 @@ export async function eventsRoutes(app: FastifyInstance) {
 			},
 		},
 		updateEvent,
+	);
+
+	app.get(
+		"/",
+		{
+			schema: {
+				summary: "List all events",
+				tags: ["Events"],
+				response: {
+					200: getEventsResponseSchema,
+				},
+			},
+		},
+		getEvents,
 	);
 }
