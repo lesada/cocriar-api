@@ -17,8 +17,6 @@ export async function eventSubscriptions(app: FastifyInstance) {
 		{
 			schema: {
 				summary: "Subscribe to an event",
-				description:
-					"Subscribe a user to an event by providing event_id in the URL and user details in the body.",
 				tags: ["Subscriptions"],
 				params: subscribeParamsSchema,
 				body: subscribeBodySchema,
@@ -37,8 +35,6 @@ export async function eventSubscriptions(app: FastifyInstance) {
 		{
 			schema: {
 				summary: "Unsubscribe to an event",
-				description:
-					"Unubscribe a user to an event by providing event_id and the email in the body",
 				tags: ["Subscriptions"],
 				params: UnsubscribeParamsSchema,
 				body: UnsubscribeBodySchema,

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-interface CreateEventsService {
+interface CreateEventService {
 	title: string;
 	image_url: string;
 	tag: string;
@@ -10,7 +10,7 @@ interface CreateEventsService {
 	max_participants?: number;
 }
 
-export async function createEventsService({
+export async function createEventService({
 	address,
 	description,
 	event_date,
@@ -18,7 +18,7 @@ export async function createEventsService({
 	max_participants,
 	tag,
 	title,
-}: CreateEventsService) {
+}: CreateEventService) {
 	const event = await prisma.event.create({
 		data: {
 			address,

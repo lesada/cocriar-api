@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { createEventsService } from "@/services/events/create-event";
+import { createEventService } from "@/services/events/create-event";
 import { type Mock, beforeEach, describe, expect, test } from "vitest";
 
 describe("services > create-events", () => {
@@ -25,7 +25,7 @@ describe("services > create-events", () => {
 	});
 
 	test("should create an event with the correct data", async () => {
-		const result = await createEventsService(mockEventInput);
+		const result = await createEventService(mockEventInput);
 
 		expect(prisma.event.create).toHaveBeenCalledOnce();
 		expect(prisma.event.create).toHaveBeenCalledWith({
