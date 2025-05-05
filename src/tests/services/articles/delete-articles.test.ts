@@ -3,7 +3,7 @@ import { deleteArticleService } from "@/services/articles/delete-article";
 import { randomUUID } from "node:crypto";
 import { type Mock, beforeEach, describe, expect, test } from "vitest";
 
-describe("services > delete-article", () => {
+describe("services > articles > delete-article", () => {
 	const mockId = randomUUID();
 
 	beforeEach(() => {

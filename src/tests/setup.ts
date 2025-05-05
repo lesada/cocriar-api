@@ -29,6 +29,12 @@ beforeAll(async () => {
 				update: vi.fn(),
 				findUniqueOrThrow: vi.fn(),
 			},
+			testimonial: {
+				create: vi.fn(),
+				delete: vi.fn(),
+				findMany: vi.fn(),
+				update: vi.fn(),
+			},
 		},
 	}));
 

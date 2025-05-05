@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { deleteEventService } from "@/services/events/delete-event";
 import { type Mock, beforeEach, describe, expect, test, vi } from "vitest";
 
-describe("services > delete-events", () => {
+describe("services > events > delete-events", () => {
 	const mockEventId = "event-123";
 
 	beforeEach(() => {

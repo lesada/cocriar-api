@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { updateArticleService } from "@/services/articles/update-article";
 import { type Mock, beforeEach, describe, expect, test } from "vitest";
 
-describe("services > update-article", () => {
+describe("services > articles > update-article", () => {
 	const mockUpdateInput = {
 		id: "article-123",
 		title: "Updated Article",

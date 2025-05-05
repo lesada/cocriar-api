@@ -3,7 +3,7 @@ import { getEventsService } from "@/services/events/get-events";
 import { randomUUID } from "node:crypto";
 import { type Mock, describe, expect, test } from "vitest";
 
-describe("services > get-events", () => {
+describe("services > events > get-events", () => {
 	const mockEvents = [
 		{
 			id: randomUUID(),

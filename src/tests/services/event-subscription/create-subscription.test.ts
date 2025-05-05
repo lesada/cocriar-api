@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { createSubscriptionService } from "@/services/event-subscription/create-subscription";
 import { describe, expect, it, vi } from "vitest";
 
-describe("services > create-subscription", () => {
+describe("services > subscriptions > create-subscription", () => {
 	const validPayload = {
 		event_id: "3ac41c9e-5b58-45cd-8ed7-f9a2b2a2ccf7",
 		email: "user@example.com",

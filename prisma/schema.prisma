@@ -60,3 +60,16 @@ model Article {
 
   @@map("articles")
 }
+
+model Testimonial {
+  id              String   @id @default(uuid())
+  name            String
+  job_description String
+  company         String
+  content         String
+  rating          Int
+  created_at      DateTime @default(now())
+  approved        Boolean  @default(false)
+
+  @@map("testimonials")
+}

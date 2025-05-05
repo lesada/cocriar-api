@@ -11,6 +11,7 @@ import { articlesRoutes } from "./http/routes/articles";
 import { eventSubscriptionsRoutes } from "./http/routes/event-subscriptions";
 import { eventsRoutes } from "./http/routes/events";
 import { healthRoutes } from "./http/routes/health";
+import { testimonialsRoutes } from "./http/routes/testimonials";
 
 export const app = fastify();
 
@@ -44,6 +45,10 @@ app.register(eventsRoutes, {
 
 app.register(eventSubscriptionsRoutes, {
 	prefix: "/events/subscribe",
+});
+
+app.register(testimonialsRoutes, {
+	prefix: "/testimonials",
 });
 
 app.register(healthRoutes, {
