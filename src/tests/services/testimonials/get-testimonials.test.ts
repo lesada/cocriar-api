@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { type Mock, describe, expect, test } from "vitest";
 
-describe("services > testimonials > get-approved-testimonials", () => {
-	test("should return a list of approved testimonials", async () => {
+describe("services > testimonials > get-testimonials", () => {
+	test("should return a list of all testimonials", async () => {
 		const mockTestimonials = [
 			{
 				id: "t1",
@@ -21,25 +21,20 @@ describe("services > testimonials > get-approved-testimonials", () => {
 				job_description: "Product Manager",
 				name: "Charles",
 				rating: 4,
-				approved: true,
+				approved: false,
 				created_at: new Date("2025-05-02T12:00:00Z"),
 			},
 		];
 
 		(prisma.testimonial.findMany as Mock).mockResolvedValue(mockTestimonials);
 
-		const { getApprovedTestimonialsService } = await import(
-			"@/services/testimonials/get-approved-testimonials"
+		const { getTestimonialsService } = await import(
+			"@/services/testimonials/get-testimonials"
 		);
 
-		const result = await getApprovedTestimonialsService();
+		const result = await getTestimonialsService();
 
-		expect(prisma.testimonial.findMany).toHaveBeenCalledWith({
-			where: {
-				approved: true,
-			},
-		});
-
+		expect(prisma.testimonial.findMany).toHaveBeenCalledWith();
 		expect(result).toEqual(mockTestimonials);
 	});
 });

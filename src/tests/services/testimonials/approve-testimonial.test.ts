@@ -9,7 +9,7 @@ describe("services > testimonials > approve-testimonial", () => {
 		const mockUpdated = {
 			id: mockId,
 			company: "ACME Inc.",
-			content: "Muito bom!",
+			content: "Very good!",
 			job_description: "CEO",
 			name: "Maria Oliveira",
 			rating: 5,

@@ -4,9 +4,9 @@ describe("services > testimonials > create-testimonial", () => {
 	test("should create a testimonial with correct data", async () => {
 		const mockInput = {
 			company: "ACME Inc.",
-			content: "Ótimo serviço!",
+			content: "Great service!",
 			job_description: "CTO",
-			name: "João Silva",
+			name: "John Smith",
 			rating: 5,
 		};
 
