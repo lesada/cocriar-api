@@ -1,6 +1,6 @@
 import { app } from "@/app";
 import supertest from "supertest";
-import { afterAll, beforeAll, describe, expect, test } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 describe("controllers > create-article", () => {
 	beforeAll(async () => {
@@ -11,7 +11,7 @@ describe("controllers > create-article", () => {
 		await app.close();
 	});
 
-	test("should create article and return 201 with article data", async () => {
+	it("should create article and return 201 with article data", async () => {
 		const response = await supertest(app.server).post("/articles").send({
 			title: "Article title",
 			image_url: "https://example.com/image.png",
@@ -22,7 +22,7 @@ describe("controllers > create-article", () => {
 		expect(response.statusCode).toBe(201);
 	});
 
-	test("should return 400 if body is invalid", async () => {
+	it("should return 400 if body is invalid", async () => {
 		const response = await supertest(app.server).post("/articles").send({
 			title: "Article title",
 		});

@@ -1,6 +1,6 @@
 import { app } from "@/app";
 import supertest from "supertest";
-import { afterAll, beforeAll, describe, expect, test } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 describe("controllers > update-article", () => {
 	beforeAll(async () => {
@@ -11,7 +11,7 @@ describe("controllers > update-article", () => {
 		await app.close();
 	});
 
-	test("should return 400 if params are invalid", async () => {
+	it("should return 400 if params are invalid", async () => {
 		const response = await supertest(app.server).patch("/articles/1");
 
 		expect(response.statusCode).toBe(400);
