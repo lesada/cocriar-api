@@ -7,6 +7,8 @@ import {
 	serializerCompiler,
 	validatorCompiler,
 } from "fastify-type-provider-zod";
+import { ZodError } from "zod";
+import { env } from "./env";
 import { articlesRoutes } from "./http/routes/articles";
 import { eventSubscriptionsRoutes } from "./http/routes/event-subscriptions";
 import { eventsRoutes } from "./http/routes/events";
@@ -53,4 +55,26 @@ app.register(testimonialsRoutes, {
 
 app.register(healthRoutes, {
 	prefix: "/health",
+});
+
+app.setErrorHandler((error, _, reply) => {
+	if (error instanceof ZodError) {
+		return reply
+			.status(400)
+			.send({ message: "Validation error.", issues: error.format() });
+	}
+
+	if (error.validation && error.code === "FST_ERR_VALIDATION") {
+		return reply
+			.status(400)
+			.send({ message: "Validation error.", issues: error.validation });
+	}
+
+	if (env.NODE_ENV !== "production") {
+		console.error(error);
+	} else {
+		// TODO: log to external service
+	}
+
+	return reply.status(500).send({ message: "Internal server error." });
 });

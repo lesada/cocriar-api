@@ -1,7 +1,7 @@
 import { ArticleNotFoundError } from "@/errors/article-not-found";
 import { deleteArticleService } from "@/services/articles/delete-article";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError, z } from "zod";
+import { z } from "zod";
 
 export const deleteArticleParamsSchema = z.object({
 	article_id: z.string().uuid(),
@@ -24,13 +24,6 @@ export async function deleteArticle(req: FastifyRequest, rep: FastifyReply) {
 
 		return rep.status(204).send();
 	} catch (err) {
-		if (err instanceof ZodError) {
-			return rep.status(400).send({
-				error: "Validation error",
-				issues: err.format(),
-			});
-		}
-
 		if (err instanceof ArticleNotFoundError) {
 			return rep
 				.status(404)
