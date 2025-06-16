@@ -16,8 +16,6 @@ export default defineConfig({
 				test: {
 					name: "unit",
 					dir: "src/tests/services",
-					environment:
-						"./prisma/vitest-environment-prisma/prisma-test-environment.ts",
 				},
 			},
 			{
