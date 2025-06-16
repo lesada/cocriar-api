@@ -1,28 +1,18 @@
-import { deleteTestimonial } from "@/http/controllers/testimonials/delete-testimonial";
-import type { FastifyReply, FastifyRequest } from "fastify";
-import { describe, expect, test, vi } from "vitest";
-
-vi.mock("@/services/testimonials/delete-testimonial", () => ({
-	deleteTestimonialService: vi.fn(),
-}));
+import { app } from "@/app";
+import supertest from "supertest";
+import { afterAll, beforeAll, describe, expect, test } from "vitest";
 
 describe("controllers > testimonials > delete-testimonial", () => {
+	beforeAll(async () => {
+		await app.ready();
+	});
+
+	afterAll(async () => {
+		await app.close();
+	});
+
 	test("should return 400 if params are invalid", async () => {
-		const req = {
-			params: { testimonial_id: "invalid-id" },
-		} as unknown as FastifyRequest;
-
-		const rep = {
-			status: vi.fn().mockReturnThis(),
-			send: vi.fn().mockReturnThis(),
-		} as unknown as FastifyReply;
-
-		await deleteTestimonial(req, rep);
-
-		expect(rep.status).toHaveBeenCalledWith(400);
-		expect(rep.send).toHaveBeenCalledWith({
-			error: "Invalid params",
-			issues: expect.any(Object),
-		});
+		const response = await supertest(app.server).delete("/testimonials/1");
+		expect(response.statusCode).toBe(400);
 	});
 });

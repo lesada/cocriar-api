@@ -11,7 +11,7 @@ describe("http > controllers > event-subscription > delete-subscription", () => 
 		await app.close();
 	});
 
-	it.only("should delete subscription and return 204", async () => {
+	it("should delete subscription and return 204", async () => {
 		const createdEvent = await supertest(app.server).post("/events").send({
 			title: "Title XYZ",
 			image_url:
@@ -45,7 +45,7 @@ describe("http > controllers > event-subscription > delete-subscription", () => 
 	});
 
 	it("should return 400 if params are invalid", async () => {
-		const response = await supertest(app.server).delete("/event/subscribe/1");
+		const response = await supertest(app.server).delete("/events/subscribe/1");
 
 		expect(response.statusCode).toBe(400);
 	});
