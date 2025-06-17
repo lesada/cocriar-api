@@ -1,4 +1,5 @@
 import { app } from "@/app";
+import { randomUUID } from "node:crypto";
 import supertest from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
@@ -29,5 +30,13 @@ describe("controllers > delete-article", () => {
 		const response = await supertest(app.server).delete("/articles/1");
 
 		expect(response.statusCode).toBe(400);
+	});
+
+	it("should return 404 if not found", async () => {
+		const response = await supertest(app.server).delete(
+			`/articles/${randomUUID()}`,
+		);
+
+		expect(response.statusCode).toBe(404);
 	});
 });

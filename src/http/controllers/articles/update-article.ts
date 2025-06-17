@@ -1,3 +1,4 @@
+import { ArticleNotFoundError } from "@/errors/article-not-found";
 import { updateArticleService } from "@/services/articles/update-article";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
@@ -15,31 +16,26 @@ export const updateArticleBodySchema = z.object({
 });
 
 export async function updateArticle(req: FastifyRequest, rep: FastifyReply) {
-	const parsedParams = updateArticleParamsSchema.safeParse(req.params);
+	try {
+		const parsedParams = updateArticleParamsSchema.parse(req.params);
 
-	if (!parsedParams.success) {
-		return rep.status(400).send({
-			error: "Invalid params",
-			issues: parsedParams.error.format(),
+		const { article_id } = parsedParams;
+
+		const parsedBody = updateArticleBodySchema.parse(req.body);
+
+		const article = await updateArticleService({
+			id: article_id,
+			...parsedBody,
 		});
-	}
 
-	const { article_id } = parsedParams.data;
-
-	const parsedBody = updateArticleBodySchema.safeParse(req.body);
-	if (!parsedBody.success) {
-		return rep.status(400).send({
-			error: "Invalid body schema",
-			issues: parsedBody.error.format(),
+		return rep.status(200).send({
+			article,
 		});
+	} catch (err) {
+		if (err instanceof ArticleNotFoundError) {
+			return rep
+				.status(404)
+				.send({ error: err.message, article_id: err.article_id });
+		}
 	}
-
-	const article = await updateArticleService({
-		id: article_id,
-		...parsedBody.data,
-	});
-
-	return rep.status(200).send({
-		article,
-	});
 }
