@@ -8,23 +8,16 @@ export const deleteEventParamsSchema = z.object({
 });
 
 export async function deleteEvent(req: FastifyRequest, rep: FastifyReply) {
-	const parsedParams = deleteEventParamsSchema.safeParse(req.params);
-
-	if (!parsedParams.success) {
-		return rep.status(400).send({
-			error: "Invalid params",
-			issues: parsedParams.error.format(),
-		});
-	}
+	const parsedParams = deleteEventParamsSchema.parse(req.params);
 
 	try {
-		await deleteEventService({ event_id: parsedParams.data.event_id });
+		await deleteEventService({ event_id: parsedParams.event_id });
 		return rep.status(204).send();
 	} catch (err) {
 		if (err instanceof EventNotFoundError) {
 			return rep
 				.status(404)
-				.send({ error: err.message, event_id: parsedParams.data.event_id });
+				.send({ error: err.message, event_id: parsedParams.event_id });
 		}
 
 		return rep.status(500).send({ error: "Internal server error" });

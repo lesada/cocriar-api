@@ -1,7 +1,7 @@
 import { TestimonialNotFoundError } from "@/errors/testimonial-not-found";
 import { deleteTestimonialService } from "@/services/testimonials/delete-testimonial";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError, z } from "zod";
+import { z } from "zod";
 
 export const deleteTestimonialParamsSchema = z.object({
 	testimonial_id: z.string().uuid(),
@@ -27,13 +27,6 @@ export async function deleteTestimonial(
 
 		return rep.status(204).send();
 	} catch (err) {
-		if (err instanceof ZodError) {
-			return rep.status(400).send({
-				error: "Validation error",
-				issues: err.format(),
-			});
-		}
-
 		if (err instanceof TestimonialNotFoundError) {
 			return rep
 				.status(404)
