@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import supertest from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-describe("controllers > create-article", () => {
+describe("controllers > get-articles-by-id", () => {
 	beforeAll(async () => {
 		await app.ready();
 	});

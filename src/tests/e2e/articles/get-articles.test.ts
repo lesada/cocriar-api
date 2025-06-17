@@ -2,7 +2,7 @@ import { app } from "@/app";
 import supertest from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-describe("controllers > create-article", () => {
+describe("controllers > get-articles", () => {
 	beforeAll(async () => {
 		await app.ready();
 	});
