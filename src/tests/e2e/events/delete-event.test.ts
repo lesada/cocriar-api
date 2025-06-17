@@ -1,4 +1,5 @@
 import { app } from "@/app";
+import { randomUUID } from "node:crypto";
 import supertest from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
@@ -32,5 +33,13 @@ describe("http > controllers > event-subscription > delete-subscription", () => 
 		const response = await supertest(app.server).delete("/events/1");
 
 		expect(response.statusCode).toBe(400);
+	});
+
+	it("should return 404 if event does not exist", async () => {
+		const response = await supertest(app.server).delete(
+			`/events/${randomUUID()}`,
+		);
+
+		expect(response.statusCode).toBe(404);
 	});
 });

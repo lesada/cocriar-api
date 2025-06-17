@@ -13,32 +13,19 @@ export const updateEventBodySchema = z.object({
 	description: z.string().optional(),
 	event_date: z.coerce.date().optional(),
 	address: z.string().optional(),
-	max_participants: z.number().optional(),
+	max_participants: z.coerce.number().optional(),
 });
 
 export async function updateEvent(req: FastifyRequest, rep: FastifyReply) {
-	const parsedParams = updateEventParamsSchema.safeParse(req.params);
+	const parsedParams = updateEventParamsSchema.parse(req.params);
 
-	if (!parsedParams.success) {
-		return rep.status(400).send({
-			error: "Invalid params",
-			issues: parsedParams.error.format(),
-		});
-	}
+	const { event_id } = parsedParams;
 
-	const { event_id } = parsedParams.data;
-
-	const parsedBody = updateEventBodySchema.safeParse(req.body);
-	if (!parsedBody.success) {
-		return rep.status(400).send({
-			error: "Invalid body schema",
-			issues: parsedBody.error.format(),
-		});
-	}
+	const parsedBody = updateEventBodySchema.parse(req.body);
 
 	const event = await updateEventService({
 		id: event_id,
-		...parsedBody.data,
+		...parsedBody,
 	});
 
 	return rep.status(200).send({

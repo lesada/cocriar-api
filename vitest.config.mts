@@ -3,9 +3,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	plugins: [tsconfigPaths()],
-
 	test: {
-		dir: "src",
 		coverage: {
 			reporter: ["text", "lcov"],
 			reportsDirectory: "./coverage",
@@ -15,14 +13,14 @@ export default defineConfig({
 				extends: true,
 				test: {
 					name: "unit",
-					dir: "src/tests/services",
+					include: ["src/tests/unit/**/*.test.ts"],
 				},
 			},
 			{
 				extends: true,
 				test: {
 					name: "e2e",
-					dir: "src/tests/controllers",
+					include: ["src/tests/e2e/**/*.test.ts"],
 					environment:
 						"./prisma/vitest-environment-prisma/prisma-test-environment.ts",
 				},
