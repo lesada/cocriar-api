@@ -1,7 +1,7 @@
 import { ArticleNotFoundError } from "@/errors/article-not-found";
 import { getArticleByIdService } from "@/services/articles/get-article-by-id";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError, z } from "zod";
+import { z } from "zod";
 
 export const getArticleByIdResponseSchema = z.object({
 	article: z.object({
@@ -21,28 +21,14 @@ export const getArticleByIdParamsSchema = z.object({
 
 export async function getArticleById(req: FastifyRequest, rep: FastifyReply) {
 	try {
-		const parsedParams = getArticleByIdParamsSchema.safeParse(req.params);
-
-		if (!parsedParams.success) {
-			return rep.status(400).send({
-				error: "Invalid params",
-				issues: parsedParams.error.format(),
-			});
-		}
+		const parsedParams = getArticleByIdParamsSchema.parse(req.params);
 
 		const article = await getArticleByIdService({
-			id: parsedParams.data.article_id,
+			id: parsedParams.article_id,
 		});
 
 		return rep.status(200).send({ article });
 	} catch (err) {
-		if (err instanceof ZodError) {
-			return rep.status(400).send({
-				error: "Validation error",
-				issues: err.format(),
-			});
-		}
-
 		if (err instanceof ArticleNotFoundError) {
 			return rep
 				.status(404)
