@@ -13,11 +13,23 @@ import { articlesRoutes } from "./http/routes/articles";
 import { eventSubscriptionsRoutes } from "./http/routes/event-subscriptions";
 import { eventsRoutes } from "./http/routes/events";
 import { healthRoutes } from "./http/routes/health";
+import { summaryRoutes } from "./http/routes/summary";
 import { testimonialsRoutes } from "./http/routes/testimonials";
 
 export const app = fastify();
 
-app.register(fastifyCors, { origin: "*" });
+app.register(fastifyCors, {
+	origin: true, // Allow all origins
+	credentials: true, // Allow cookies/auth headers
+	methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+	allowedHeaders: [
+		"Content-Type",
+		"Authorization",
+		"Accept",
+		"Origin",
+		"X-Requested-With",
+	],
+});
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
@@ -47,6 +59,10 @@ app.register(eventsRoutes, {
 
 app.register(eventSubscriptionsRoutes, {
 	prefix: "/events/subscribe",
+});
+
+app.register(summaryRoutes, {
+	prefix: "/summary",
 });
 
 app.register(testimonialsRoutes, {

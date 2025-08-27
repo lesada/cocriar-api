@@ -1,0 +1,6 @@
+{
+  "sonarlint.connectedMode.project": {
+    "connectionId": "lesada",
+    "projectKey": "lesada_cocriar-api"
+  }
+}
