@@ -16,7 +16,6 @@ describe("controllers > create-article", () => {
 			title: "Article title",
 			image_url: "https://example.com/image.png",
 			category: "tech",
-			description: "Short desc",
 			content: "Full content",
 		});
 		expect(response.statusCode).toBe(201);

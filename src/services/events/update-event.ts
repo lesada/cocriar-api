@@ -5,8 +5,7 @@ interface UpdateEventService {
 	id: string;
 	title?: string;
 	image_url?: string;
-	tag?: string;
-	description?: string;
+	content?: string;
 	event_date?: Date;
 	address?: string;
 	max_participants?: number;
@@ -16,8 +15,7 @@ export async function updateEventService({
 	id,
 	title,
 	image_url,
-	tag,
-	description,
+	content,
 	event_date,
 	address,
 	max_participants,
@@ -30,8 +28,7 @@ export async function updateEventService({
 			data: {
 				title,
 				image_url,
-				tag,
-				description,
+				content,
 				event_date,
 				address,
 				max_participants,

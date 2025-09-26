@@ -24,7 +24,6 @@ describe("controllers > get-articles-by-id", () => {
 			title: "Article title",
 			image_url: "https://example.com/image.png",
 			category: "tech",
-			description: "Short desc",
 			content: "Full content",
 		});
 		const { id } = created.body.article;
@@ -37,7 +36,6 @@ describe("controllers > get-articles-by-id", () => {
 				title: "Article title",
 				image_url: "https://example.com/image.png",
 				category: "tech",
-				description: "Short desc",
 				content: "Full content",
 			}),
 		);
