@@ -10,7 +10,6 @@ export const updateArticleParamsSchema = z.object({
 export const updateArticleBodySchema = z.object({
 	title: z.string().optional(),
 	category: z.string().optional(),
-	description: z.string().optional(),
 	image_url: z.string().optional(),
 	content: z.string().optional(),
 });

@@ -23,8 +23,7 @@ CREATE TABLE "events" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "image_url" TEXT NOT NULL,
-    "tag" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "event_date" TIMESTAMP(3) NOT NULL,
     "address" TEXT NOT NULL,
@@ -39,7 +38,6 @@ CREATE TABLE "articles" (
     "title" TEXT NOT NULL,
     "image_url" TEXT NOT NULL,
     "category" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

@@ -6,13 +6,11 @@ interface UpdateArticleService {
 	title?: string;
 	image_url?: string;
 	category?: string;
-	description?: string;
 	content?: string;
 }
 
 export async function updateArticleService({
 	id,
-	description,
 	image_url,
 	category,
 	title,
@@ -24,7 +22,6 @@ export async function updateArticleService({
 				id,
 			},
 			data: {
-				description,
 				image_url,
 				category,
 				title,
