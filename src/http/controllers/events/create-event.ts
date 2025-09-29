@@ -4,8 +4,7 @@ import { z } from "zod";
 
 export const createEventBodySchema = z.object({
 	title: z.string(),
-	tag: z.string(),
-	description: z.string(),
+	content: z.string(),
 	event_date: z.coerce.date(),
 	address: z.string(),
 	max_participants: z.coerce
@@ -16,7 +15,11 @@ export const createEventBodySchema = z.object({
 });
 
 export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
-	const parsed = createEventBodySchema.parse(req.body);
-	const event = await createEventService(parsed);
-	return rep.status(201).send({ event });
+	try {
+		const parsed = createEventBodySchema.parse(req.body);
+		const event = await createEventService(parsed);
+		return rep.status(201).send({ event });
+	} catch (error) {
+		console.error(error);
+	}
 }

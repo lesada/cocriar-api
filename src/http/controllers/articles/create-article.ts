@@ -5,7 +5,6 @@ import { z } from "zod";
 export const createArticleBodySchema = z.object({
 	title: z.string(),
 	category: z.string(),
-	description: z.string(),
 	image_url: z.string(),
 	content: z.string(),
 });
@@ -16,7 +15,6 @@ export const createArticleResponseSchema = z.object({
 		title: z.string(),
 		image_url: z.string(),
 		category: z.string(),
-		description: z.string(),
 		content: z.string(),
 		created_at: z.coerce.date(),
 	}),

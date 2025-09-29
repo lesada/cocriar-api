@@ -37,8 +37,7 @@ model Event {
   id               String   @id @default(uuid())
   title            String
   image_url        String
-  tag              String
-  description      String   @db.Text
+  content          String   @db.Text
   created_at       DateTime @default(now())
   event_date       DateTime
   address          String
@@ -50,13 +49,12 @@ model Event {
 }
 
 model Article {
-  id          String   @id @default(uuid())
-  title       String
-  image_url   String
-  category    String
-  description String   @db.Text
-  content     String   @db.Text
-  created_at  DateTime @default(now())
+  id         String   @id @default(uuid())
+  title      String
+  image_url  String
+  category   String
+  content    String   @db.Text
+  created_at DateTime @default(now())
 
   @@map("articles")
 }

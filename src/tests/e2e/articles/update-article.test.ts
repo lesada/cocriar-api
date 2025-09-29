@@ -17,7 +17,6 @@ describe("controllers > update-article", () => {
 			title: "Article title",
 			image_url: "https://example.com/image.png",
 			category: "tech",
-			description: "Short desc",
 			content: "Full content",
 		});
 		const { id } = created.body.article;
@@ -25,7 +24,6 @@ describe("controllers > update-article", () => {
 			title: "Updated title",
 			image_url: "https://example.com/updated-image.png",
 			category: "health",
-			description: "Updated short desc",
 			content: "Updated full content",
 		});
 		expect(response.statusCode).toBe(200);
@@ -35,7 +33,6 @@ describe("controllers > update-article", () => {
 				title: "Updated title",
 				image_url: "https://example.com/updated-image.png",
 				category: "health",
-				description: "Updated short desc",
 				content: "Updated full content",
 			}),
 		);
@@ -54,7 +51,6 @@ describe("controllers > update-article", () => {
 				title: "Updated title",
 				image_url: "https://example.com/updated-image.png",
 				category: "health",
-				description: "Updated short desc",
 				content: "Updated full content",
 			});
 

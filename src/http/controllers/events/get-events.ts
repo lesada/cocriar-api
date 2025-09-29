@@ -4,8 +4,7 @@ import { z } from "zod";
 
 export const eventsSchema = z.object({
 	title: z.string(),
-	tag: z.string(),
-	description: z.string(),
+	content: z.string(),
 	event_date: z.coerce.date(),
 	address: z.string(),
 	max_participants: z.coerce
