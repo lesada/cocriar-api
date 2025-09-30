@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 interface UpdateArticleService {
 	id: string;
 	title?: string;
-	image_url?: string;
+	image_url?: string | null;
 	category?: string;
 	content?: string;
 }

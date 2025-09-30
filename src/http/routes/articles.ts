@@ -15,6 +15,7 @@ import {
 } from "../controllers/articles/get-article-by-id";
 import {
 	getArticles,
+	getArticlesQuerySchema,
 	getArticlesResponseSchema,
 } from "../controllers/articles/get-articles";
 import {
@@ -33,6 +34,7 @@ export async function articlesRoutes(app: FastifyInstance) {
 				response: {
 					200: getArticlesResponseSchema,
 				},
+				querystring: getArticlesQuerySchema,
 			},
 		},
 		getArticles,
