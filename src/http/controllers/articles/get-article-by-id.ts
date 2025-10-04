@@ -7,7 +7,7 @@ export const getArticleByIdResponseSchema = z.object({
 	article: z.object({
 		id: z.string().uuid(),
 		title: z.string(),
-		image_url: z.string(),
+		image_url: z.string().nullable().optional(),
 		category: z.string(),
 		content: z.string(),
 		created_at: z.coerce.date(),
