@@ -5,7 +5,7 @@ interface CreateEventService {
 	image_url: string;
 	content: string;
 	event_date: Date;
-	address: string;
+	address?: string;
 	max_participants?: number;
 }
 
