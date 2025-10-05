@@ -8,7 +8,7 @@ export const updateEventParamsSchema = z.object({
 
 export const updateEventBodySchema = z.object({
 	title: z.string().optional(),
-	image_url: z.string().optional(),
+	image_url: z.string().nullable().optional(),
 	content: z.string().optional(),
 	event_date: z.coerce.date().optional(),
 	address: z.string().optional(),

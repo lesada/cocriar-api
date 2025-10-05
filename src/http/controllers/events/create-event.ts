@@ -11,7 +11,7 @@ export const createEventBodySchema = z.object({
 		.number()
 		.min(1, "Number of participants must be bigger than 0")
 		.optional(),
-	image_url: z.string(),
+	image_url: z.string().nullable().optional(),
 });
 
 export async function createEvent(req: FastifyRequest, rep: FastifyReply) {
