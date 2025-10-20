@@ -2,10 +2,10 @@ import { prisma } from "@/lib/prisma";
 
 interface CreateEventService {
 	title: string;
-	image_url: string;
+	image_url?: string | null;
 	content: string;
 	event_date: Date;
-	address: string;
+	address?: string;
 	max_participants?: number;
 }
 
