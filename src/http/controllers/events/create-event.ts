@@ -6,12 +6,12 @@ export const createEventBodySchema = z.object({
 	title: z.string(),
 	content: z.string(),
 	event_date: z.coerce.date(),
-	address: z.string(),
+	address: z.string().optional(),
 	max_participants: z.coerce
 		.number()
 		.min(1, "Number of participants must be bigger than 0")
 		.optional(),
-	image_url: z.string(),
+	image_url: z.string().nullable().optional(),
 });
 
 export async function createEvent(req: FastifyRequest, rep: FastifyReply) {

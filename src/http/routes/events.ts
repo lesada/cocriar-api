@@ -15,6 +15,10 @@ import {
 } from "../controllers/events/update-event";
 
 import {
+	getEventById,
+	getEventByIdResponseSchema,
+} from "../controllers/events/get-event-by-id";
+import {
 	getEvents,
 	getEventsResponseSchema,
 } from "../controllers/events/get-events";
@@ -78,5 +82,18 @@ export async function eventsRoutes(app: FastifyInstance) {
 			},
 		},
 		getEvents,
+	);
+	app.get(
+		"/:event_id",
+		{
+			schema: {
+				summary: "Search by event id",
+				tags: ["Events"],
+				response: {
+					200: getEventByIdResponseSchema,
+				},
+			},
+		},
+		getEventById,
 	);
 }
